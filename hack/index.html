@@ -42,7 +42,8 @@ case 'cat':if(!arg){print('Usage: cat <filename>','bad');break}if(!Object.hasOwn
 case 'unlock':if(stage!==0){print('Vault already unlocked.','system');break}if(arg==='seven'||arg==='7'){advance(1,'Code accepted. Vault unlocked.')}else print('ACCESS DENIED. Incorrect code.','bad');break;
 case 'decode':if(stage<1){print('Unlock the vault first.','bad');break}if(stage>=2){print('Message already decoded.','system');break}if(arg==='orbit')advance(2,'Binary decoded: ORBIT. Archive access key accepted.');else print('Incorrect decoded text. Try converting each 8-bit chunk to ASCII.','bad');break;
 case 'login':if(stage<2){print('Archive unavailable. Complete earlier missions.','bad');break}if(stage>=4){print('Already logged in as ROOT.','good');break}if(arg==='secret'){if(stage===2)advance(3,'Password verified. Final authentication pending.');else print('Already logged in. Run sudo root.','hint')}else print('Incorrect password. Look for an acrostic in final.txt.','bad');break;
-case 'sudo':if(stage===3&&arg==='root')advance(4,'Root session authenticated.');else if(stage===4)print('Already root.','good');else print('Permission denied. Authenticate first.','bad');break;\ncase 'status':print('MISSION '+(Math.min(stage+1,4))+'/4\n'+(stage===4?'ALL OBJECTIVES COMPLETE':hints[stage]),'hint');break;
+case 'sudo':if(stage===3&&arg==='root')advance(4,'Root session authenticated.');else if(stage===4)print('Already root.','good');else print('Permission denied. Authenticate first.','bad');break;
+case 'status':print('MISSION '+(Math.min(stage+1,4))+'/4\n'+(stage===4?'ALL OBJECTIVES COMPLETE':hints[stage]),'hint');break;
 case 'hint':print('HINT: '+hints[stage],'hint');break;
 case 'clear':screen.replaceChildren();break;
 case 'about':print('NODE-67 is a fictional terminal escape-room game. All files and commands exist only in this browser. No requests are sent to any server.','hint');break;
