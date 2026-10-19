@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#0a0b10"/>
   <meta name="description" content="Adam makes things when he's bored. Games, apps, experiments and more."/>
-  <title>Adam is bored — My corner of the internet</title>
+  <title>adamisbored</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&display=swap');
     :root{color-scheme:dark;--bg:#0a0b10;--panel:#12141c;--line:#292c39;--text:#f1f1f5;--muted:#9b9caa;--accent:#65a9ff;--mint:#7ed9ff}
@@ -122,7 +122,7 @@
     <section id="contact" class="wrap"><div class="contact reveal"><div><div class="mono">03 / WHAT'S NEXT?</div><h2>More coming soon<span style="color:var(--accent)">.</span></h2><p>I’m building behind the scenes. The forum is live, and more projects are on the way.</p></div><a class="pill" href="https://forum.adamisbored.xyz/" style="color:var(--mint);border-color:#7ed9ff4a">Explore Forum ↗</a></div></section>
   </main>
   <div class="divider"></div>
-  <footer class="wrap"><span>© <span id="year"></span> adamisbored.xyz — made out of boredom</span><a href="https://forum.adamisbored.xyz/">Forum ↗</a></footer>
+  <footer class="wrap"><span>© <span id="year"></span> adamisbored.xyz — made out of boredom</span><a href="https://forum.adamisbored.xyz/">Forum ↗</a><a href="https://sixseven.adamisbored.xyz/">what's this? ↗</a></footer>
   <script>
     document.getElementById('year').textContent=new Date().getFullYear();
     if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>io.observe(el))}else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'))}
