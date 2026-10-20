@@ -32,7 +32,7 @@
     .contact{border:1px solid #3e90ec66;background:radial-gradient(ellipse at 90% 0%,#2879da38,transparent 60%),#13131c;border-radius:24px;padding:56px;display:flex;justify-content:space-between;align-items:center;gap:25px}.contact h2{margin-bottom:12px}.contact p{color:var(--muted);font-size:14px;max-width:450px;line-height:1.8}
     footer{padding:28px 0 45px;display:flex;justify-content:space-between;gap:20px;font-size:12px;color:#797a89}.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}.reveal.visible{opacity:1;transform:translateY(0)}
     @media(max-width:800px){.orb{opacity:.18;right:-80px}.hero{padding:100px 0 95px;min-height:unset}.about{grid-template-columns:1fr;gap:25px}.contact{padding:32px;align-items:start;flex-direction:column}}
-    @media(max-width:600px){.wrap{width:min(100% - 32px,1120px)}nav{min-height:72px}.navlinks{gap:13px}.navlinks a:not(.pill){display:none}.hero p{font-size:16px}h1{font-size:clamp(56px,13vw,80px)}.grid{grid-template-columns:1fr}.project{min-height:250px}.sectiontop{align-items:start;flex-direction:column}section{padding:65px 0}.contact{padding:28px}footer{flex-direction:column}}
+    @media(max-width:600px){.navlinks .account-link{display:inline!important}.wrap{width:min(100% - 32px,1120px)}nav{min-height:72px}.navlinks{gap:13px}.navlinks a:not(.pill){display:none}.hero p{font-size:16px}h1{font-size:clamp(56px,13vw,80px)}.grid{grid-template-columns:1fr}.project{min-height:250px}.sectiontop{align-items:start;flex-direction:column}section{padding:65px 0}.contact{padding:28px}footer{flex-direction:column}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
   .forum-card{grid-column:span 1;border-color:#4089dc68;background:linear-gradient(145deg,#11243e,#101722)}.forum-card:before{opacity:.24}.project-url{display:inline-block;margin-top:17px;color:var(--accent);font:12px "DM Mono",monospace}.coming-card{border-style:dashed}.navlinks a:focus-visible,.btn:focus-visible,.project:focus-visible,.pill:focus-visible{outline:2px solid var(--accent);outline-offset:4px}::selection{background:#357fd5;color:white}@media(max-width:600px){.navlinks a[href="#projects"]{display:none}.navlinks a[href="https://forum.adamisbored.xyz/"]{display:inline}} 
   
@@ -70,7 +70,7 @@
 <body><div class="backgrid" aria-hidden="true"></div><div class="backglow" aria-hidden="true"></div>
   <header><nav class="wrap">
     <a class="logo" href="#">adam<span>is</span>bored<span>.</span></a>
-    <div class="navlinks"><a href="#projects">Projects</a><a href="https://forum.adamisbored.xyz/">Forum ↗</a><a href="#about">About</a><a href="#contact" class="pill">Say hello ↗</a></div>
+    <div class="navlinks"><a href="#projects">Projects</a><a href="https://forum.adamisbored.xyz/">Forum ↗</a><a href="#about">About</a><a href="https://accounts.adamisbored.xyz/" class="pill account-link">Account ↗</a><a href="#contact" class="pill">Say hello ↗</a></div>
   </nav></header>
   <main>
     <div class="wrap"><div class="hero">
