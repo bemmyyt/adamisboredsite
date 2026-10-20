@@ -33,14 +33,17 @@ $('logout').onclick=async()=>{try{await signOut(auth)}catch(e){message('profileM
 // Popup sign-in handoff: only send Firebase ID tokens to explicitly trusted project origins.
 const trustedOrigins=new Set(['https://forum.adamisbored.xyz','https://adamisbored.xyz']);
 const params=new URLSearchParams(location.search),returnOrigin=params.get('origin');
-const isHandoff=window.opener&&trustedOrigins.has(returnOrigin)&&params.get('handoff')==='1';
+const isHandoff=!!(window.opener&&trustedOrigins.has(returnOrigin)&&params.get('handoff')==='1');
+let handoffPending=false;
+window.addEventListener('message',event=>{if(isHandoff&&event.origin===returnOrigin&&event.source===window.opener&&event.data?.type==='adamisbored-handoff-received'){handoffPending=false;window.close();}});
 async function handoff(user){
- if(!isHandoff||!user)return;
+ if(!isHandoff||!user||handoffPending)return;
+ handoffPending=true;
  try{
   const token=await user.getIdToken();
   window.opener.postMessage({type:'adamisbored-firebase-handoff',idToken:token},returnOrigin);
-  const note=document.createElement('p');note.textContent='Signed in. You can close this window and return to the forum.';document.querySelector('.panel').append(note);
- }catch(e){console.error('Account handoff failed',e)}
+  const note=document.getElementById('handoffNote')||document.createElement('p');note.id='handoffNote';note.textContent='Finishing sign-in on the forum…';document.querySelector('.panel').append(note);
+ }catch(e){handoffPending=false;console.error('Account handoff failed',e)}
 }
 
 onAuthStateChanged(auth,async user=>{if(user)await handoff(user);$('loading').classList.add('hide');$('signedOut').classList.toggle('hide',!!user);$('signedIn').classList.toggle('hide',!user);if(!user)return;const uid=user.uid;$('profileEmail').textContent=user.email||'Google account';$('username').textContent=user.displayName||'Account';$('avatar').textContent=(user.displayName||user.email||'A').slice(0,1).toUpperCase();$('profileNote').textContent='';try{const snap=await getDoc(doc(db,'users',uid));if(auth.currentUser?.uid!==uid)return;if(snap.exists()){const data=snap.data();if(data.username){$('username').textContent='@'+data.username;$('avatar').textContent=data.username.slice(0,1).toUpperCase()}else $('profileNote').textContent='Choose your forum username in the forum.';if(data.banned)$('profileNote').textContent='Your forum account has been restricted.'}else $('profileNote').textContent='Open the forum to set up your username.'}catch(e){$('profileNote').textContent='Profile details unavailable. Your login is still active.'}});
