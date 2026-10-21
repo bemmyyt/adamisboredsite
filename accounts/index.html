@@ -11,7 +11,7 @@ main{max-width:1000px;margin:76px auto;padding:0 24px}.eyebrow{font:11px 'DM Mon
 <section class="panel"><div id="loading"><h2>Connecting…</h2><p>Checking your account.</p></div>
 <div id="signedOut" class="hide"><h2 id="formTitle">Welcome back.</h2><p id="formHelp">Sign in with the same account you use on the forum.</p><form id="authForm"><label for="email">Email</label><input id="email" type="email" autocomplete="email" required><label for="password">Password</label><input id="password" type="password" minlength="6" autocomplete="current-password" required><button class="button" id="submitButton" type="submit">Sign in</button></form><button id="googleButton" class="button ghost" type="button">Continue with Google</button><button class="switch" id="switchMode" type="button">New here? Create an account</button><button class="switch" id="resetPassword" type="button" style="display:block">Forgot password?</button><div id="authMessage" class="notice" role="status" aria-live="polite"></div></div>
 <div id="signedIn" class="hide"><h2>Your account.</h2><p>You're signed in to adamisbored Accounts.</p><div class="profile"><div class="avatar" id="avatar">A</div><div><div class="username" id="username"></div><div class="email" id="profileEmail"></div></div></div><div class="hint" id="profileNote"></div><button id="sendReset" class="button ghost" type="button">Send password reset email</button><button id="logout" class="button ghost" type="button">Sign out</button><div id="profileMessage" class="notice" role="status" aria-live="polite"></div></div>
-<div class="links">Want to post? <a href="https://forum.adamisbored.xyz/">Open the forum ↗</a></div></section></div></main>
+<a id="returnToForum" class="button ghost hide" href="https://forum.adamisbored.xyz/" style="display:block;text-align:center;margin-top:16px">Return to forum ↗</a><div class="links">Want to post? <a href="https://forum.adamisbored.xyz/">Open the forum ↗</a></div></section></div></main>
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
 import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,signOut,sendPasswordResetEmail}from'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
@@ -29,5 +29,11 @@ async function reset(email,id){if(!email){message(id,'Enter your email address f
 $('resetPassword').onclick=()=>reset($('email').value.trim(),'authMessage');
 $('sendReset').onclick=()=>reset(auth.currentUser?.email,'profileMessage');
 $('logout').onclick=async()=>{try{await signOut(auth)}catch(e){message('profileMessage',err(e))}};
+
+// Firebase-only portal. Sessions are scoped to the current domain.
+const params=new URLSearchParams(location.search);
+const returnUrl=params.get('return_to')==='https://forum.adamisbored.xyz/'?'https://forum.adamisbored.xyz/?accounts=ready':null;
+const returnLink=document.getElementById('returnToForum');
+if(returnUrl){returnLink.href=returnUrl;returnLink.classList.remove('hide');}
 onAuthStateChanged(auth,async user=>{$('loading').classList.add('hide');$('signedOut').classList.toggle('hide',!!user);$('signedIn').classList.toggle('hide',!user);if(!user)return;const uid=user.uid;$('profileEmail').textContent=user.email||'Google account';$('username').textContent=user.displayName||'Account';$('avatar').textContent=(user.displayName||user.email||'A').slice(0,1).toUpperCase();$('profileNote').textContent='';try{const snap=await getDoc(doc(db,'users',uid));if(auth.currentUser?.uid!==uid)return;if(snap.exists()){const data=snap.data();if(data.username){$('username').textContent='@'+data.username;$('avatar').textContent=data.username.slice(0,1).toUpperCase()}else $('profileNote').textContent='Choose your forum username in the forum.';if(data.banned)$('profileNote').textContent='Your forum account has been restricted.'}else $('profileNote').textContent='Open the forum to set up your username.'}catch(e){$('profileNote').textContent='Profile details unavailable. Your login is still active.'}});
 </script></body></html>
